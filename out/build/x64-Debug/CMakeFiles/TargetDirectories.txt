@@ -1,0 +1,3 @@
+D:/IT/projects/dbCppproject/db_cpp/out/build/x64-Debug/CMakeFiles/db_cpp.dir
+D:/IT/projects/dbCppproject/db_cpp/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/IT/projects/dbCppproject/db_cpp/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

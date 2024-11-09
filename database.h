@@ -5,17 +5,18 @@
 #ifndef DB_H
 #define DB_H
 
-#include <iostream>
+//#include <iostream>
+#include <mysql_connection.h>
 
 namespace DB {
     class Database {
     public:
-        Database(std::string &path);
-        std::string getPath(){ return path; };
+        Database(sql::Connection* connection);
+        sql::Connection* getConnection(){ return connection; };
 
 
     private:
-        std::string path;
+        sql::Connection* connection;
     };
 }
 #endif //DB_H

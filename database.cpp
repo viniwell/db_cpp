@@ -1,7 +1,8 @@
 #include <iostream>
 #include "database.h"
 
-DB::Database::Database(std::string &path) {
-    std::cout << "Initialised database with path " << path << std::endl;
-    this->path = path;
+DB::Database::Database(sql::Connection* connection) {
+   std::cout << "Create Database instance. Connection valid: " << connection->isValid();
+   this->connection = connection;
 }
+
