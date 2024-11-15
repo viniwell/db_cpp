@@ -5,7 +5,7 @@
 #ifndef DB_H
 #define DB_H
 
-//#include <iostream>
+#include <iostream>
 #include <mysql_connection.h>
 
 namespace DB {
