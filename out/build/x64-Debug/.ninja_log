@@ -1,5 +1,0 @@
-# ninja log v5
-8	1609	7528668431771155	CMakeFiles/db_cpp.dir/database.cpp.obj	7916926ed31460fd
-15	1686	7528668432531124	CMakeFiles/db_cpp.dir/DBModel.cpp.obj	a7efe6d55384473b
-22	1688	7528668432551131	CMakeFiles/db_cpp.dir/testing/main.cpp.obj	fdf99143e4505918
-1688	2282	7528668438114957	db_cpp.exe	e3f72c35a8abb138
