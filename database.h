@@ -25,7 +25,6 @@ namespace DB {
         sql::mysql::MySQL_Driver* getDriver(){ return driver; };
 
 
-
         ~Database();
 
     private:
