@@ -22,7 +22,7 @@ namespace DB {
         //void init();
 
 
-        //bool create(std::string data);
+        void insert(std::string &fields, std::string values);
 
     private:
         std::string name;

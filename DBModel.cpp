@@ -39,11 +39,18 @@ DB::DBModel::DBModel(std::string &name, DB::Database *db, std::string &tableCode
 
 
 bool DB::DBModel::isInitialized() {
-    std:: string query = "SHOW TABLES LIKE '" + this->name + "'";
+    std::string query = "SHOW TABLES LIKE '" + this->name + "'";
     sql::ResultSet* res = db->execute(query);
 
     //checks if ResultSet contains something, true means it returned table info
     return res->next();
+}
+
+
+
+void DB::DBModel::insert(std::string &fields, std::string values) {
+    std::string query = "INSERT INTO " + name + " ( " + fields + " ) values ( " + values + " )";
+    db->execute(query);
 }
 
 
