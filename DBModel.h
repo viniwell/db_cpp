@@ -26,8 +26,11 @@ namespace DB {
         //Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
         sql::ResultSet* select(std::string &fields, std::string &condition=emptyString);
 
-        //Executes 'DELETE' sql query with specified condition, returns nothing
+        //Executes 'delete' sql query with specified condition, returns nothing
         void sqlDelete(std::string &condition=emptyString);
+
+        //Executes 'update' sql query with specified fields, values and condition, returns nothing
+        void update(std::vector<std::string> &fields, std::vector<std::string> &values, std::string &condition=emptyString);
 
     private:
         std::string name;

@@ -70,5 +70,17 @@ void DB::DBModel::sqlDelete(std::string &condition) {
     db->execute(query);
 }
 
+void DB::DBModel::update(std::vector<std::string> &fields, std::vector<std::string> &values, std::string &condition) {
+    if (fields.size() != values.size()) {
+        throw std::exception("Can not update, because fields and values vectors have different size\n");
+    }
+
+    std::string query = "update " + name + " set \n";
+    for (int i=0; i<fields.size(); i++) {
+        query += (fields.at(i) + " = '" +  values.at(i) + (i!=fields.size()-1 ? "',\n" : "'\n"));
+    }
+    query += ("where "+condition);
+    db->execute(query);
+}
 
 
