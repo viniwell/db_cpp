@@ -60,8 +60,14 @@ void DB::DBModel::insert(std::string &fields, std::string values) {
 
 //Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
 sql::ResultSet* DB::DBModel::select(std::string &fields, std::string &condition) {
-    std::string query = "SELECT " + fields + " FROM " + name + (!condition.empty() ? (" WHERE "+condition) : "");
+    std::string query = "SELECT " + fields + " FROM " + name + (!condition.empty() ? (" WHERE "+condition) : "") + ";";
     return db->execute(query);
+}
+
+//Executes 'DELETE' sql query with specified condition, returns nothing
+void DB::DBModel::sqlDelete(std::string &condition) {
+    std::string query = "delete from " + name + (!condition.empty() ? (" where " + condition) : "") + ";";
+    db->execute(query);
 }
 
 
