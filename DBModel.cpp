@@ -30,7 +30,7 @@ DB::DBModel::DBModel(std::string &name, Database *db, std::string &tableCode) {
         }
 
         //create table
-        std::string query = "CREATE TABLE " + this->name + "(" +
+        std::string query = "create table " + this->name + "(" +
                             tableCode+
                             ");";
         db->execute(query);
@@ -40,7 +40,7 @@ DB::DBModel::DBModel(std::string &name, Database *db, std::string &tableCode) {
 
 //checks whether table with the same name exists
 bool DB::DBModel::isInitialized() {
-    std::string query = "SHOW TABLES LIKE '" + this->name + "'";
+    std::string query = "show tables like '" + this->name + "'";
     sql::ResultSet* res = db->execute(query);
     try {
         //checks if ResultSet contains something, true means it returned table info
@@ -54,13 +54,13 @@ bool DB::DBModel::isInitialized() {
 
 //Executes 'INSERT' sql query with specified fields and condition, returns nothing
 void DB::DBModel::insert(std::string &fields, std::string values) {
-    std::string query = "INSERT INTO " + name + " ( " + fields + " ) values ( " + values + " );";
+    std::string query = "insert into " + name + " ( " + fields + " ) values ( " + values + " );";
     db->execute(query);
 }
 
 //Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
 sql::ResultSet* DB::DBModel::select(std::string &fields, std::string &condition) {
-    std::string query = "SELECT " + fields + " FROM " + name + (!condition.empty() ? (" WHERE "+condition) : "") + ";";
+    std::string query = "select " + fields + " from " + name + (!condition.empty() ? (" where "+condition) : "") + ";";
     return db->execute(query);
 }
 
