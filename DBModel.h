@@ -8,26 +8,26 @@
 #include <iostream>
 #include <vector>
 
-static std::string defaultTableCode;
+static std::string emptyString;
 namespace DB {
 
     class DBModel {
 
     public:
         //Constructor
-        DBModel(std::string &name, DB::Database* db, std::string &tableCode = defaultTableCode);
+        DBModel(std::string &name, Database* db, std::string &tableCode = emptyString);
 
-        //returns whether table with specifies name exists
+        //checks whether table with the same name exists
         bool isInitialized();
-        //void init();
 
-
+        //Executes 'INSERT' sql query with specified fields and condition, returns nothing
         void insert(std::string &fields, std::string values);
+        //Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
+        sql::ResultSet* select(std::string &fields, std::string &condition=emptyString);
 
     private:
         std::string name;
-        DB::Database* db;
-        //std::vector<std::string> fields;
+        Database* db;
     };
 }
 
