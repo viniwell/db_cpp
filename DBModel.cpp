@@ -13,6 +13,17 @@
 #include "dbModel.h"
 
 
+std::string &vectorElementsRepresentation(std::vector<std::string> &v, std::string &wrapIn=emptyString) {
+    std::string result;
+    bool hasWrap = !wrapIn.empty();
+    for (int i=0; i<v.size(); i++) {
+        result += ( (hasWrap ? wrapIn : "") + v.at(i) + (hasWrap ? wrapIn : "") +(i!=v.size()-1 ? ", " : ""));
+    }
+    return result;
+}
+
+
+
 DB::DBModel::DBModel(std::string &name, Database *db, std::string &tableCode) {
     //assign properties
     this->name = std::move(name);
@@ -52,17 +63,40 @@ bool DB::DBModel::isInitialized() {
 }
 
 
+
+
 //Executes 'INSERT' sql query with specified fields and condition, returns nothing
-void DB::DBModel::insert(std::string &fields, std::string values) {
+void DB::DBModel::insert(std::string &fields, std::string &values) {
     std::string query = "insert into " + name + " ( " + fields + " ) values ( " + values + " );";
     db->execute(query);
 }
+//Executes 'INSERT' sql query with specified fields and condition, returns nothing
+void DB::DBModel::insert(std::vector<std::string> &fields, std::vector<std::string> &values) {
+    if (fields.size() != values.size()) {
+        throw std::exception("Can not insert, because fields and values vectors have different size\n");
+    }
+    std::string query = "insert into " + name + " ( " + vectorElementsRepresentation(fields) + " ) values ( " + vectorElementsRepresentation(values, singleQuote) + " );";
+    db->execute(query);
+}
+
+
+
 
 //Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
 sql::ResultSet* DB::DBModel::select(std::string &fields, std::string &condition) {
     std::string query = "select " + fields + " from " + name + (!condition.empty() ? (" where "+condition) : "") + ";";
     return db->execute(query);
 }
+//Executes 'SELECT' sql query with specified fields and condition, returns ResultSet
+sql::ResultSet *DB::DBModel::select(std::vector<std::string> &fields, std::string &condition)
+{
+    std::string query = "select " + vectorElementsRepresentation(fields) + " from " + name + (!condition.empty() ? (" where "+condition) : "") + ";";
+    return db->execute(query);
+}
+
+
+
+
 
 //Executes 'DELETE' sql query with specified condition, returns nothing
 void DB::DBModel::sqlDelete(std::string &condition) {
@@ -70,6 +104,16 @@ void DB::DBModel::sqlDelete(std::string &condition) {
     db->execute(query);
 }
 
+
+
+
+
+//Executes 'update' sql query with specified fields, values and condition, returns nothing
+void DB::DBModel::update(std::string &dataToUpdate, std::string &condition) {
+    std::string query = "update " + name + " set \n" + dataToUpdate + (!condition.empty() ? (" where " + condition) : "") + ";";
+    db->execute(query);
+}
+//Executes 'update' sql query with specified fields, values and condition, returns nothing
 void DB::DBModel::update(std::vector<std::string> &fields, std::vector<std::string> &values, std::string &condition) {
     if (fields.size() != values.size()) {
         throw std::exception("Can not update, because fields and values vectors have different size\n");
@@ -79,7 +123,7 @@ void DB::DBModel::update(std::vector<std::string> &fields, std::vector<std::stri
     for (int i=0; i<fields.size(); i++) {
         query += (fields.at(i) + " = '" +  values.at(i) + (i!=fields.size()-1 ? "',\n" : "'\n"));
     }
-    query += ("where "+condition);
+    query += (!condition.empty() ? (" where " + condition) : "") + ";";
     db->execute(query);
 }
 
