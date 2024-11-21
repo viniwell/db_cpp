@@ -128,3 +128,32 @@ void DB::DBModel::update(std::vector<std::string> &fields, std::vector<std::stri
 }
 
 
+
+
+
+/*
+ *Returns vector with vectors, each representing a field. Element on index ...
+ *[0] - Field,
+ *[1] - Type,
+ *[2] - Null,
+ *[3] - Key,
+ *[4] - Default,
+ *[5] - Extra
+ */
+std::vector< std::vector<std::string> > *DB::DBModel::getFields() {
+    auto *result = new std::vector< std::vector<std::string> >;
+    std::string query = "show columns from " + name + " from " + db->getSchema()+";";
+
+    sql::ResultSet* res = db->execute(query);
+    std::vector<std::string> column;
+    while (res->next()) {
+        for (const std::string& property : DB::columnProperties) {
+            column.push_back(res->getString(property).asStdString());
+        }
+        std::vector<std::string> columnCopy = column;
+        result->push_back(columnCopy);
+        column.clear();
+    }
+
+    return result;
+}

@@ -30,6 +30,7 @@ void DB::printResultSet(sql::ResultSet *resultSet, std::vector<std::string> &col
 
 DB::Database::Database(const std::string &url, const std::string &username, const std::string &password, const std::string &schema, bool debugMode) {
     this->debugMode = debugMode;
+    this->schema = schema;
 
     sql::mysql::MySQL_Driver *driver = sql::mysql::get_mysql_driver_instance();
     this->driver = driver;

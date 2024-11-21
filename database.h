@@ -25,7 +25,7 @@ namespace DB {
         //Executes query and tries to return a ResultSet. If impossible, return nullptr
         sql::ResultSet* execute(std::string &query);
 
-
+        std::string &getSchema(){ return schema; };
         sql::Connection* getConnection(){ return connection; };
         sql::mysql::MySQL_Driver* getDriver(){ return driver; };
 
@@ -38,10 +38,14 @@ namespace DB {
         sql::Connection* connection;
         sql::Statement* statement;
         bool debugMode = false;
+        std::string schema;
     };
 
 
     //prints specified fields of ResultSet object
     void printResultSet(sql::ResultSet* resultSet, std::vector<std::string> &columnNames);
+
+    const std::string columnProperties[6] = {"Field", "Type", "Null", "Key", "Default", "Extra"};
+
 }
 #endif //DB_H

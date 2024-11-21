@@ -44,6 +44,20 @@ namespace DB {
         //Executes 'update' sql query with specified fields, values and condition, returns nothing
         void update(std::vector<std::string> &fields, std::vector<std::string> &values, std::string &condition=emptyString);
 
+
+
+
+
+        /*returns vector with vectors, each representing a field. Element on index ...
+         *[0] - Field,
+         *[1] - Type,
+         *[2] - Null,
+         *[3] - Key,
+         *[4] - Default,
+         *[5] - Extra
+         */
+        std::vector< std::vector<std::string> > *getFields();
+
     private:
         std::string name;
         Database* db;
