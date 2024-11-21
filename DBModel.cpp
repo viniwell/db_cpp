@@ -140,19 +140,19 @@ void DB::DBModel::update(std::vector<std::string> &fields, std::vector<std::stri
  *[4] - Default,
  *[5] - Extra
  */
-std::vector< std::string* > &DB::DBModel::getFields() {
-    std::vector< std::string* > result;
-    std::string query = "show columns from " + name + " from " + db->getSchema();
+std::vector< std::vector<std::string> > *DB::DBModel::getFields() {
+    auto *result = new std::vector< std::vector<std::string> >;
+    std::string query = "show columns from " + name + " from " + db->getSchema()+";";
 
     sql::ResultSet* res = db->execute(query);
-    std::string column[6];
+    std::vector<std::string> column;
     while (res->next()) {
-        int count=0;
         for (const std::string& property : DB::columnProperties) {
-            column[count] = res->getString(property);
-            count++;
+            column.push_back(res->getString(property).asStdString());
         }
-        result.push_back(column);
+        std::vector<std::string> columnCopy = column;
+        result->push_back(columnCopy);
+        column.clear();
     }
 
     return result;

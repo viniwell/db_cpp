@@ -56,7 +56,7 @@ namespace DB {
          *[4] - Default,
          *[5] - Extra
          */
-        std::vector< std::string* > &getFields();
+        std::vector< std::vector<std::string> > *getFields();
 
     private:
         std::string name;
