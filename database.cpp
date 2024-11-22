@@ -7,6 +7,8 @@
 #include <typeinfo>
 #include <vector>
 
+#include "DBModel.h"
+
 //prints specified fields of ResultSet object
 void DB::printResultSet(sql::ResultSet *resultSet, std::vector<std::string> &columnNames) {
     int count = 1;
@@ -67,9 +69,40 @@ sql::ResultSet *DB::Database::execute(std::string &query) {
 
 
 
+void DB::Database::addModel(DBModel *model) {
+    // check if already in a vector
+    if (std::find(modelsInitialised.begin(), modelsInitialised.end(), model) != modelsInitialised.end()) {
+        throw std::exception(("Model '" + model->getName() + "' is already initialised.\n").c_str());
+    }
+
+    //append a model
+    modelsInitialised.push_back(model);
+}
+
+
+void DB::Database::removeModel(DBModel *model) {
+
+    // get index of a model in a modelsInitialised
+    auto pos = std::find(modelsInitialised.begin(), modelsInitialised.end(), model);
+
+    // check if not in a vector
+    if (pos == modelsInitialised.end()) {
+        throw std::exception(("Model '" + model->getName() + "' is not yet initialised.\n").c_str());
+    }
+
+    //remove model
+    modelsInitialised.erase(pos);
+}
+
+
 
 
 DB::Database::~Database() {
+    auto modelsInitialisedClone = modelsInitialised;
+    for (auto* model : modelsInitialisedClone) {
+        delete model;
+    }
+
     delete statement;
     connection->close();
     delete connection;

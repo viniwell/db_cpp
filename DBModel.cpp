@@ -46,6 +46,9 @@ DB::DBModel::DBModel(std::string &name, Database *db, std::string &tableCode) {
                             ");";
         db->execute(query);
     }
+
+    //add model to db.modelsInitialised vector
+    db->addModel(this);
 }
 
 
@@ -156,4 +159,12 @@ std::vector< std::vector<std::string> > *DB::DBModel::getFields() {
     }
 
     return result;
+}
+
+
+
+
+
+DB::DBModel::~DBModel() {
+    db->removeModel(this);
 }

@@ -18,6 +18,8 @@ namespace DB {
         //Constructor
         DBModel(std::string &name, Database* db, std::string &tableCode = emptyString);
 
+        std::string &getName(){ return name; };
+
         //checks whether table with the same name exists
         bool isInitialized();
 
@@ -46,6 +48,8 @@ namespace DB {
 
 
 
+
+        ~DBModel();
 
 
         /*returns vector with vectors, each representing a field. Element on index ...

@@ -14,6 +14,7 @@
 
 
 namespace DB {
+    class DBModel;
 
     class Database {
 
@@ -25,11 +26,15 @@ namespace DB {
         //Executes query and tries to return a ResultSet. If impossible, return nullptr
         sql::ResultSet* execute(std::string &query);
 
-        std::string &getSchema(){ return schema; };
+        std::string getSchema(){ return schema; };
         sql::Connection* getConnection(){ return connection; };
         sql::mysql::MySQL_Driver* getDriver(){ return driver; };
-
+        std::vector <DBModel*> getModelsInitialised(){ return modelsInitialised; };
         bool getDebugMode(){ return debugMode; };
+
+
+        void addModel(DBModel* model);
+        void removeModel(DBModel* model);
 
         ~Database();
 
@@ -37,6 +42,7 @@ namespace DB {
         sql::mysql::MySQL_Driver* driver;
         sql::Connection* connection;
         sql::Statement* statement;
+        std::vector <DBModel*> modelsInitialised;
         bool debugMode = false;
         std::string schema;
     };
